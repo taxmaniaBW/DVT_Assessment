@@ -1,4 +1,4 @@
-package com.utick.dvtassessment.repository
+package com.utick.dvtcodingassessment.repository
 
 sealed class ApiResponse<T>(
     val data: T? = null,
