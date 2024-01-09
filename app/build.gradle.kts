@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization").version("1.9.21")
 }
 
 android {
@@ -61,6 +62,10 @@ dependencies {
     implementation(Deps.MATERIAL3)
     implementation(Deps.KTOR_CIO)
     implementation(Deps.KTOR_CORE)
+    implementation(Deps.KTOR_CLIENT_ANDROID)
+    implementation(Deps.KTOR_CLIENT_LOGGING)
+    implementation(Deps.KTOR_CONTENT_NEGOTIATION)
+    implementation(Deps.KOTLINX)
     testImplementation(Deps.JUNIT)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
