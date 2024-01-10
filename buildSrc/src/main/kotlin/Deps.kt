@@ -19,6 +19,7 @@ object Deps {
     const val KTOR_CONTENT_NEGOTIATION = "io.ktor:ktor-client-content-negotiation:${Versions.KTOR}"
     const val KTOR_CLIENT_ANDROID = "io.ktor:ktor-client-android:${Versions.KTOR}"
     const val KTOR_CLIENT_LOGGING = "io.ktor:ktor-client-logging:${Versions.KTOR}"
+    const val KOTLINX_JSON = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.KOTLINX}"
 
     //DI
     const val KOIN = "io.insert-koin:koin-android:${Versions.KOIN}"

@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    kotlin("plugin.serialization").version("1.9.21")
 }
 
 android {
@@ -71,6 +70,7 @@ dependencies {
     testImplementation(Deps.KOIN_JUNIT)
     implementation(Deps.KOIN_KTOR)
     implementation(Deps.KOIN_LOGGER)
+    implementation(Deps.KOTLINX_JSON)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
