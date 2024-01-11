@@ -7,6 +7,7 @@ object Versions {
         const val JUNIT = "4.13.2"
         const val KOTLINX = "1.6.2"
         const val KOIN = "3.5.3"
+        const val COMPOSE_COMPILER = "1.5.8"
 
 
 }

@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.utick.dvtcodingassessment"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.utick.dvtcodingassessment"
@@ -40,7 +40,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = Versions.COMPOSE_COMPILER
     }
     packaging {
         resources {

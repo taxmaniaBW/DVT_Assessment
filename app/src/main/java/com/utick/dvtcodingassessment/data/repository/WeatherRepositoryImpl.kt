@@ -2,6 +2,7 @@ package com.utick.dvtcodingassessment.data.repository
 
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
+import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
 import com.utick.dvtcodingassessment.network.ApiClient
 import com.utick.dvtcodingassessment.network.BASE_URL
 import com.utick.dvtcodingassessment.network.CURRENT
@@ -30,9 +31,9 @@ class WeatherRepositoryImpl(private val client : ApiClient): WeatherRepository {
 
     }
 
-    override suspend fun getFiveDayForecast(coord: Coord): Either<Failure, CurrentWeatherResponse> {
+    override suspend fun getFiveDayForecast(coord: Coord): Either<Failure, ForecastWeatherResponse> {
         return try {
-            val currentWeatherResponse : CurrentWeatherResponse = client.api.get("$BASE_URL$FORECAST5") {
+            val forecastWeatherResponse : ForecastWeatherResponse = client.api.get("$BASE_URL$FORECAST5") {
                 url {
                     parameters.append("appid", "abc123")
                     parameters.append("lat", coord.lat.toString())
@@ -40,7 +41,7 @@ class WeatherRepositoryImpl(private val client : ApiClient): WeatherRepository {
 
                 }
             }.body()
-            Either.Right(currentWeatherResponse)
+            Either.Right(forecastWeatherResponse)
         } catch (e: Exception) {
             Either.Left(Failure.ServerError)
         }

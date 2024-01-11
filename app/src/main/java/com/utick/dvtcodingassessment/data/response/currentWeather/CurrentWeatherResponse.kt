@@ -1,8 +1,6 @@
 package com.utick.dvtcodingassessment.data.response.currentWeather
 
-import com.utick.dvtcodingassessment.model.Main
-import com.utick.dvtcodingassessment.model.Weather
-import com.utick.dvtcodingassessment.model.Wind
+
 import kotlinx.serialization.Serializable
 
 
