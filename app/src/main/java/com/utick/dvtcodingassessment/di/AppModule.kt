@@ -7,6 +7,7 @@ import com.utick.dvtcodingassessment.data.apiService.GetCurrentWeather
 import com.utick.dvtcodingassessment.data.apiService.GetFiveDayForecast
 import com.utick.dvtcodingassessment.network.ApiClient
 import com.utick.dvtcodingassessment.util.NetworkHandler
+import io.ktor.client.engine.cio.CIO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.named
@@ -19,6 +20,6 @@ val appModule = module {
         Dispatchers.IO
     }
     single{::NetworkHandler}
-    single { ::ApiClient }
+    single { ApiClient(CIO.create()) }
     single { GetCurrentWeather(get(), get(), get(named("IODispatcher"))) }
 }

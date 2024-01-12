@@ -1,6 +1,7 @@
 package com.utick.dvtcodingassessment.network
 
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.HttpClientEngine
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
@@ -9,9 +10,9 @@ import io.ktor.client.plugins.contentnegotiation.*
 import kotlinx.serialization.json.Json
 import io.ktor.serialization.kotlinx.json.*
 
-class ApiClient {
+class ApiClient(engine: HttpClientEngine) {
 
-    val api: HttpClient = HttpClient(Android) {
+    val api: HttpClient = HttpClient(engine) {
         install(Logging) {
             level = LogLevel.ALL
         }
