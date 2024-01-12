@@ -12,6 +12,11 @@ object Deps {
     //Testing
     const val JUNIT = "org.junit.jupiter:junit-jupiter:${Versions.JUNIT}"
     const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
+    const val KTOR_MOCK = "io.ktor:ktor-client-mock:${Versions.KTOR}"
+    const val KOTEST = "io.kotest:kotest-runner-junit5:${Versions.KOTEST}"
+    const val KOTEST_ASSERTIONS = "io.kotest:kotest-assertions-core:${Versions.KOTEST}"
+    const val ANDROID_X_TESTING = "androidx.arch.core:core-testing:${Versions.ANDROID_X_TESTING}"
+    const val KOTLINX_CO_TEST = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KOTLINX_CO_TEST}"
 
     //KTOR
     const val KTOR_CORE = "io.ktor:ktor-client-core:${Versions.KTOR}"

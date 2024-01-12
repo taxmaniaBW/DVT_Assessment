@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -80,17 +81,16 @@ dependencies {
     implementation(Deps.KOTLINX_JSON)
     testImplementation(Deps.JUNIT)
     testImplementation(Deps.MOCKK)
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
-    testImplementation ("androidx.arch.core:core-testing:2.2.0")
-    testImplementation("io.kotest:kotest-runner-junit5:5.8.0")
-    testImplementation ("io.kotest:kotest-assertions-core:5.8.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    testImplementation(Deps.KTOR_MOCK)
+    testImplementation(Deps.ANDROID_X_TESTING)
+    testImplementation(Deps.KOTEST)
+    testImplementation(Deps.KOTLINX_CO_TEST)
+    testImplementation(Deps.KOTEST_ASSERTIONS)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    androidTestImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
+    androidTestImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

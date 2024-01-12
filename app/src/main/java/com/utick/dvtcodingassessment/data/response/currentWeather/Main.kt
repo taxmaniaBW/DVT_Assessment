@@ -1,18 +1,19 @@
 package com.utick.dvtcodingassessment.data.response.currentWeather
 
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Main (
 
   val temp      : Double? = null,
-  val feelsLike : Double? = null,
-  val tempMin   : Double? = null,
-  val tempMax   : Double? = null,
+  @SerialName("feels_like")val feelsLike : Double? = null,
+  @SerialName("temp_min")val tempMin   : Double? = null,
+  @SerialName("temp_max")val tempMax   : Double? = null,
   val pressure  : Int?    = null,
   val humidity  : Int?    = null,
-  val seaLevel  : Int?    = null,
-  val grndLevel : Int?    = null
+  @SerialName("sea_level")val seaLevel  : Int?    = null,
+  @SerialName("grnd_level")val grndLevel : Int?    = null
 
 )

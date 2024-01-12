@@ -11,23 +11,33 @@ import com.utick.dvtcodingassessment.util.Either
 import com.utick.dvtcodingassessment.util.Failure
 import io.ktor.client.call.body
 import io.ktor.client.request.get
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
-class WeatherRepositoryImpl(private val client : ApiClient): WeatherRepository {
+class WeatherRepositoryImpl(private val client : ApiClient,
+                            private val dispatcher : CoroutineDispatcher = Dispatchers.Default): WeatherRepository {
     override suspend fun getCurrentWeather(coord: Coord): Either<Failure, CurrentWeatherResponse> {
 
-        return try {
-            val currentWeatherResponse : CurrentWeatherResponse = client.api.get("$BASE_URL$CURRENT") {
-                url {
-                    parameters.append("appid", "abc123")
-                    parameters.append("lat", coord.lat.toString())
-                    parameters.append("lon", coord.lon.toString())
+           return try {
+                runBlocking(dispatcher) {
+                    val currentWeatherResponse: CurrentWeatherResponse =
+                        client.api.get("$BASE_URL$CURRENT") {
+                            url {
+                                parameters.append("appid", "abc123")
+                                parameters.append("lat", coord.lat.toString())
+                                parameters.append("lon", coord.lon.toString())
 
+                            }
+                        }.body()
+                    Either.Right(currentWeatherResponse)
                 }
-            }.body()
-            Either.Right(currentWeatherResponse)
-        } catch (e: Exception) {
-            Either.Left(Failure.ServerError)
-        }
+            } catch (e: Exception) {
+                Either.Left(Failure.ServerError)
+            }
+
+
+
 
     }
 
