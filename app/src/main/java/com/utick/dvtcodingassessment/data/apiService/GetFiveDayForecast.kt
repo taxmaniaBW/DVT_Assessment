@@ -8,16 +8,19 @@ import com.utick.dvtcodingassessment.interactor.UseCase
 import com.utick.dvtcodingassessment.util.Either
 import com.utick.dvtcodingassessment.util.Failure
 import com.utick.dvtcodingassessment.util.NetworkHandler
+import kotlinx.coroutines.CoroutineScope
 
-class GetFiveDayForecast(
-    private val networkHandler: NetworkHandler,
-    private val weatherRepository: WeatherRepository):
-    UseCase<ForecastWeatherResponse, Coord>() {
-    override suspend fun run(params: Coord): Either<Failure, ForecastWeatherResponse> {
-        return when (networkHandler.isNetworkAvailable()){
-            true -> weatherRepository.getFiveDayForecast(params)
-            false -> Either.Left(Failure.NetworkConnection)
-        }
-
-    }
+class GetFiveDayForecast{
+//    private val networkHandler: NetworkHandler,
+//    private val weatherRepository: WeatherRepository,
+//    private val scope: CoroutineScope
+//):
+//    UseCase<ForecastWeatherResponse, Coord>(scope) {
+//    override suspend fun run(params: Coord): Either<Failure, ForecastWeatherResponse> {
+//        return when (networkHandler.isNetworkAvailable()){
+//            true -> weatherRepository.getFiveDayForecast(params)
+//            false -> Either.Left(Failure.NetworkConnection)
+//        }
+//
+//    }
 }

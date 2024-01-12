@@ -10,7 +10,8 @@ object Deps {
     const val MATERIAL3 = "androidx.compose.material3:material3"
 
     //Testing
-    const val JUNIT = "junit:junit:${Versions.JUNIT}"
+    const val JUNIT = "org.junit.jupiter:junit-jupiter:${Versions.JUNIT}"
+    const val MOCKK = "io.mockk:mockk:${Versions.MOCKK}"
 
     //KTOR
     const val KTOR_CORE = "io.ktor:ktor-client-core:${Versions.KTOR}"

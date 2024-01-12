@@ -7,11 +7,16 @@ import com.utick.dvtcodingassessment.interactor.UseCase
 import com.utick.dvtcodingassessment.util.Either
 import com.utick.dvtcodingassessment.util.Failure
 import com.utick.dvtcodingassessment.util.NetworkHandler
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
 class GetCurrentWeather(
     private val networkHandler: NetworkHandler,
-    private val weatherRepository: WeatherRepository):
-    UseCase<CurrentWeatherResponse, Coord>() {
+    private val weatherRepository: WeatherRepository,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+):
+    UseCase<CurrentWeatherResponse, Coord>(ioDispatcher) {
     override suspend fun run(params: Coord): Either<Failure, CurrentWeatherResponse> {
         return when (networkHandler.isNetworkAvailable()){
             true -> weatherRepository.getCurrentWeather(params)
