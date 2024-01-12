@@ -26,7 +26,7 @@ abstract class BaseTest {
     private val standardCoroutineDispatcher = StandardTestDispatcher()
     private val testCoroutineScope = TestScope(standardCoroutineDispatcher)
     val networkHandler = mockk<NetworkHandler>()
-    val weatherRepository = mockk<WeatherRepository>()
+    var weatherRepository = mockk<WeatherRepository>()
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @BeforeEach
@@ -42,7 +42,7 @@ abstract class BaseTest {
     }
 
     fun currentWeatherResponse() = CurrentWeatherResponse(
-        Coord(19.555, 19.555),
+        Coord(10.99, 44.34),
         arrayListOf(Weather(501, "Rain", "moderate rain", "10d")),
         "stations",
         Main(298.48, 298.74, 297.56, 300.05, 1015, 64, 1015, 933),
