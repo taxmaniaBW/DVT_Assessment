@@ -79,6 +79,7 @@ dependencies {
     implementation(Deps.KOIN_KTOR)
     implementation(Deps.KOIN_LOGGER)
     implementation(Deps.KOTLINX_JSON)
+    implementation(Deps.KOIN_COMPOSE)
     testImplementation(Deps.JUNIT)
     testImplementation(Deps.MOCKK)
     testImplementation(Deps.KTOR_MOCK)

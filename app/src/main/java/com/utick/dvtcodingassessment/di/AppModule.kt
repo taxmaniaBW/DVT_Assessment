@@ -6,6 +6,7 @@ import com.utick.dvtcodingassessment.MainActivity
 import com.utick.dvtcodingassessment.data.apiService.GetCurrentWeather
 import com.utick.dvtcodingassessment.data.apiService.GetFiveDayForecast
 import com.utick.dvtcodingassessment.network.ApiClient
+import com.utick.dvtcodingassessment.ui.view.HomeView
 import com.utick.dvtcodingassessment.util.NetworkHandler
 import io.ktor.client.engine.cio.CIO
 import kotlinx.coroutines.CoroutineScope
@@ -22,4 +23,5 @@ val appModule = module {
     single{::NetworkHandler}
     single { ApiClient(CIO.create()) }
     single { GetCurrentWeather(get(), get(), get(named("IODispatcher"))) }
+    single { ::HomeView }
 }
