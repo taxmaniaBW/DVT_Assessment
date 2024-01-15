@@ -1,4 +1,4 @@
-package com.utick.dvtcodingassessment.ui.model
+package com.utick.dvtcodingassessment.ui.data
 
 enum class WeatherCondition(val value: String) {
     SUNNY("Clear"),

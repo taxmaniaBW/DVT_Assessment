@@ -11,6 +11,7 @@ import com.utick.dvtcodingassessment.util.NetworkHandler
 import io.ktor.client.engine.cio.CIO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -20,8 +21,8 @@ val appModule = module {
     single(named("IODispatcher")) {
         Dispatchers.IO
     }
-    single{::NetworkHandler}
+    single{NetworkHandler(androidContext())}
     single { ApiClient(CIO.create()) }
     single { GetCurrentWeather(get(), get(), get(named("IODispatcher"))) }
-    single { ::HomeView }
+    single { HomeView() }
 }

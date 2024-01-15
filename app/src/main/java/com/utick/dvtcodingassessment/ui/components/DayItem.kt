@@ -8,10 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import com.utick.dvtcodingassessment.R
-import com.utick.dvtcodingassessment.data.response.forecastresponse.Day
-import com.utick.dvtcodingassessment.ui.model.DayRowModel
-import com.utick.dvtcodingassessment.util.getDayOfWeek
+import com.utick.dvtcodingassessment.ui.data.DayRowModel
 
 
 @Composable

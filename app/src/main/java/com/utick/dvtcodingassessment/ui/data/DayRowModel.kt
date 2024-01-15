@@ -1,4 +1,4 @@
-package com.utick.dvtcodingassessment.ui.model
+package com.utick.dvtcodingassessment.ui.data
 
 data class DayRowModel (
     val day: String,

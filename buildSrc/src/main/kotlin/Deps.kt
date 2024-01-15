@@ -33,4 +33,7 @@ object Deps {
     const val KOIN_KTOR = "io.insert-koin:koin-ktor:${Versions.KOIN}"
     const val KOIN_LOGGER = "io.insert-koin:koin-logger-slf4j:${Versions.KOIN}"
     const val KOIN_COMPOSE = "io.insert-koin:koin-androidx-compose:${Versions.KOIN}"
+
+    //ADDITIONAL
+    const val ACCOMPANIST = "com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST}"
 }

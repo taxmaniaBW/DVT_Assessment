@@ -24,9 +24,10 @@ class WeatherRepositoryImpl(private val client : ApiClient,
                     val currentWeatherResponse: CurrentWeatherResponse =
                         client.api.get("$BASE_URL$CURRENT") {
                             url {
-                                parameters.append("appid", "abc123")
+                                parameters.append("appid", "c3d9c0d8ff634263a3ca2a6bb9dbf1bf")
                                 parameters.append("lat", coord.lat.toString())
                                 parameters.append("lon", coord.lon.toString())
+                                parameters.append("units", "metric")
 
                             }
                         }.body()

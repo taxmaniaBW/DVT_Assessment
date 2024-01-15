@@ -80,6 +80,7 @@ dependencies {
     implementation(Deps.KOIN_LOGGER)
     implementation(Deps.KOTLINX_JSON)
     implementation(Deps.KOIN_COMPOSE)
+    implementation(Deps.ACCOMPANIST)
     testImplementation(Deps.JUNIT)
     testImplementation(Deps.MOCKK)
     testImplementation(Deps.KTOR_MOCK)
