@@ -18,10 +18,10 @@ class HomeView {
      */
     fun getWeatherIcon(day: Day): Int{
         return when(WeatherCondition.fromValue(day.weather[0].main)){
-            WeatherCondition.SUNNY -> 0
-            WeatherCondition.CLOUDY -> 1
-            WeatherCondition.RAINY -> 2
-            else -> {0}
+            WeatherCondition.SUNNY -> R.drawable.clear
+            WeatherCondition.CLOUDY -> R.drawable.partlysunny
+            WeatherCondition.RAINY -> R.drawable.rain
+            else -> {R.drawable.clear}
         }
 
     }
@@ -36,7 +36,7 @@ class HomeView {
             WeatherCondition.CLOUDY -> CurrentWeatherTheme(R.drawable.sea_cloudy, CLOUDY)
             WeatherCondition.RAINY -> CurrentWeatherTheme(R.drawable.sea_rainy, RAINY)
             else -> {
-                CurrentWeatherTheme(0,  SUNNY)}
+                CurrentWeatherTheme(R.drawable.sea_sunnypng,  SUNNY)}
         }
     }
 }

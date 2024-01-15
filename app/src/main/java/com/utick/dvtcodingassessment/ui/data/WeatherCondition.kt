@@ -7,7 +7,7 @@ enum class WeatherCondition(val value: String) {
     SNOW("Snow");
 
     companion object {
-        public fun fromValue(value: String): WeatherCondition = when (value) {
+        fun fromValue(value: String): WeatherCondition = when (value) {
             "Clear" -> SUNNY
             "Clouds"  -> CLOUDY
             "Rain"  -> RAINY

@@ -6,5 +6,5 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val viewModelsModule = module {
-    viewModel { WeatherViewModel(get(), get(named("IODispatcher")), get()) }
+    viewModel { WeatherViewModel(get(), get(), get(named("IODispatcher")), get()) }
 }

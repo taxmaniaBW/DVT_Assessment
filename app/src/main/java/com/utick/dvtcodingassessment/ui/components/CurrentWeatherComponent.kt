@@ -444,13 +444,14 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                         ) {
                             uiModel.temp?.let { temp ->
                                 Text(
+                                    fontFamily = amentFamily,
                                     text = temp.toString(),
                                     textAlign = TextAlign.Center,
                                     color = Color.White,
                                     modifier = Modifier.wrapContentHeight(align = Alignment.CenterVertically)
                                 )
                             }
-                            Text(text = "min", textAlign = TextAlign.Center, color = Color.White)
+                            Text(fontFamily = amentFamily, text = "min", textAlign = TextAlign.Center, color = Color.White)
                         }
                     }
                     Box(
@@ -467,9 +468,10 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             uiModel.temp?.let { temp ->
-                                Text(text = temp, textAlign = TextAlign.Center, color = Color.White)
+                                Text(fontFamily = amentFamily, text = temp, textAlign = TextAlign.Center, color = Color.White)
                             }
                             Text(
+                                fontFamily = amentFamily,
                                 text = "Current",
                                 textAlign = TextAlign.Center,
                                 color = Color.White
@@ -496,6 +498,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
 
                                 ) {
                                     Text(
+                                        fontFamily = amentFamily,
                                         text = temp.toString(),
                                         textAlign = TextAlign.Center,
                                         color = Color.White,
@@ -504,7 +507,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                                     )
                                 }
                             }
-                            Text(text = "max", textAlign = TextAlign.Center, color = Color.White)
+                            Text(fontFamily = amentFamily, text = "max", textAlign = TextAlign.Center, color = Color.White)
                         }
                     }
                 }

@@ -24,5 +24,6 @@ val appModule = module {
     single{NetworkHandler(androidContext())}
     single { ApiClient(CIO.create()) }
     single { GetCurrentWeather(get(), get(), get(named("IODispatcher"))) }
+    single { GetFiveDayForecast(get(), get(), get(named("IODispatcher"))) }
     single { HomeView() }
 }

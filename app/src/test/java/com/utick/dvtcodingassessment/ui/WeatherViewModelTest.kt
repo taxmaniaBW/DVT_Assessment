@@ -68,7 +68,7 @@ class WeatherViewModelTest: BaseTest() {
 
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         val getCurrentWeather = GetCurrentWeather(networkHandler, weatherRepository, dispatcher)
-        weatherViewModel = WeatherViewModel(getCurrentWeather, dispatcher, homeView)
+        weatherViewModel = WeatherViewModel(getCurrentWeather, getFiveDayForecast, dispatcher, homeView)
         val expected = currentWeatherResponse()
         coEvery { weatherRepository.getCurrentWeather(any()) } returns Either.Right(expected)
         coEvery { networkHandler.isNetworkAvailable() } returns true
@@ -86,7 +86,7 @@ class WeatherViewModelTest: BaseTest() {
 
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         val getCurrentWeather = GetCurrentWeather(networkHandler, weatherRepository, dispatcher)
-        weatherViewModel = WeatherViewModel(getCurrentWeather, dispatcher, homeView)
+        weatherViewModel = WeatherViewModel(getCurrentWeather, getFiveDayForecast, dispatcher, homeView)
         val expected = currentWeatherResponse()
         coEvery { weatherRepository.getCurrentWeather(any()) } returns Either.Right(expected)
         coEvery { networkHandler.isNetworkAvailable() } returns false
