@@ -6,7 +6,6 @@ import com.utick.dvtcodingassessment.util.Either
 import com.utick.dvtcodingassessment.util.Failure
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch

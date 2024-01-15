@@ -8,8 +8,13 @@ import com.utick.dvtcodingassessment.network.BASE_URL
 import com.utick.dvtcodingassessment.network.CURRENT
 import com.utick.dvtcodingassessment.network.FORECAST5
 import com.utick.dvtcodingassessment.util.APIKEY
+import com.utick.dvtcodingassessment.util.APPID
 import com.utick.dvtcodingassessment.util.Either
 import com.utick.dvtcodingassessment.util.Failure
+import com.utick.dvtcodingassessment.util.LAT
+import com.utick.dvtcodingassessment.util.LON
+import com.utick.dvtcodingassessment.util.METRIC
+import com.utick.dvtcodingassessment.util.UNITS
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import kotlinx.coroutines.CoroutineDispatcher
@@ -25,9 +30,10 @@ class WeatherRepositoryImpl(private val client : ApiClient,
                     val currentWeatherResponse: CurrentWeatherResponse =
                         client.api.get("$BASE_URL$CURRENT") {
                             url {
-                                parameters.append("appid", APIKEY)
-                                parameters.append("lat", coord.lat.toString())
-                                parameters.append("lon", coord.lon.toString())
+                                parameters.append(APPID, APIKEY)
+                                parameters.append(LAT, coord.lat.toString())
+                                parameters.append(LON, coord.lon.toString())
+                                parameters.append(UNITS, METRIC)
 
                             }
                         }.body()
@@ -46,9 +52,10 @@ class WeatherRepositoryImpl(private val client : ApiClient,
         return try {
             val forecastWeatherResponse : ForecastWeatherResponse = client.api.get("$BASE_URL$FORECAST5") {
                 url {
-                    parameters.append("appid", APIKEY)
-                    parameters.append("lat", coord.lat.toString())
-                    parameters.append("lon", coord.lon.toString())
+                    parameters.append(APPID, APIKEY)
+                    parameters.append(LAT, coord.lat.toString())
+                    parameters.append(LON, coord.lon.toString())
+                    parameters.append(UNITS, METRIC)
 
                 }
             }.body()

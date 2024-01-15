@@ -8,6 +8,7 @@ import com.utick.dvtcodingassessment.data.apiService.GetFiveDayForecast
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.repository.WeatherRepository
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
+import com.utick.dvtcodingassessment.ui.view.HomeView
 import com.utick.dvtcodingassessment.util.Either
 import com.utick.dvtcodingassessment.util.Failure
 import com.utick.dvtcodingassessment.util.NetworkHandler
@@ -49,10 +50,15 @@ class WeatherViewModelTest: BaseTest() {
     private lateinit var getFiveDayForecast: GetFiveDayForecast
 
 
+    @MockK
+    private lateinit var homeView: HomeView
+
+
+
     @OptIn(ExperimentalCoroutinesApi::class)
     @BeforeEach
     fun setUp() {
-        weatherViewModel = WeatherViewModel(getCurrentWeather, getFiveDayForecast)
+
 
     }
 
@@ -62,7 +68,7 @@ class WeatherViewModelTest: BaseTest() {
 
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         val getCurrentWeather = GetCurrentWeather(networkHandler, weatherRepository, dispatcher)
-        weatherViewModel = WeatherViewModel(getCurrentWeather, getFiveDayForecast, dispatcher)
+        weatherViewModel = WeatherViewModel(getCurrentWeather, getFiveDayForecast, dispatcher, homeView)
         val expected = currentWeatherResponse()
         coEvery { weatherRepository.getCurrentWeather(any()) } returns Either.Right(expected)
         coEvery { networkHandler.isNetworkAvailable() } returns true
@@ -80,7 +86,7 @@ class WeatherViewModelTest: BaseTest() {
 
         val dispatcher = UnconfinedTestDispatcher(testScheduler)
         val getCurrentWeather = GetCurrentWeather(networkHandler, weatherRepository, dispatcher)
-        weatherViewModel = WeatherViewModel(getCurrentWeather, getFiveDayForecast, dispatcher)
+        weatherViewModel = WeatherViewModel(getCurrentWeather, getFiveDayForecast, dispatcher, homeView)
         val expected = currentWeatherResponse()
         coEvery { weatherRepository.getCurrentWeather(any()) } returns Either.Right(expected)
         coEvery { networkHandler.isNetworkAvailable() } returns false
