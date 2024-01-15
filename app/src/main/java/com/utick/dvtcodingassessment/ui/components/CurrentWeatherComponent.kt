@@ -25,13 +25,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.utick.dvtcodingassessment.R
-import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.ui.WeatherViewModel
 import com.utick.dvtcodingassessment.ui.data.CurrentWeatherTheme
 import com.utick.dvtcodingassessment.ui.data.CurrentWeatherUI
@@ -172,154 +169,6 @@ fun CurrentWeatherLoading() {
                             Text(modifier = Modifier.shimmerLoadingAnimation(),text = temp, textAlign = TextAlign.Center, color = Color.White)
                         }
                         Text(modifier = Modifier.shimmerLoadingAnimation(),text = "Current", textAlign = TextAlign.Center, color = Color.White)
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxSize()
-
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentHeight()
-                            .align(Alignment.Center),
-
-                        horizontalAlignment = Alignment.End
-                    ) {
-                        uiModel.temp?.let { temp ->
-                            Box(
-                                modifier = Modifier.wrapContentHeight()
-
-                            ) {
-                                Text(
-                                    text = temp.toString(),
-                                    textAlign = TextAlign.Center,
-                                    color = Color.White,
-                                    modifier = Modifier.wrapContentHeight()
-
-                                )
-                            }
-                        }
-                        Text(text = "max", textAlign = TextAlign.Center, color = Color.White)
-                    }
-                }
-            }
-        }
-
-        Divider(
-            color = Color.White,
-            modifier = Modifier
-                .height(1.dp)
-                .fillMaxWidth()
-        )
-    }
-}
-
-@Preview
-@Composable
-fun CurrentWeatherPreview(){
-    val uiModel = CurrentWeatherUI(
-        loading = false,
-        23.0.asTemperatureString(),
-        "Sunny",
-        theme = CurrentWeatherTheme(R.drawable.sea_sunnypng, SUNNY)
-    )
-    Column {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxSize()
-
-        ) {
-            uiModel.theme?.let { theme ->
-                Image(
-                    modifier = Modifier.matchParentSize(),
-                    painter = painterResource(id = theme.bgImage),
-                    contentDescription = "",
-                    contentScale = ContentScale.FillBounds
-
-                )
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentHeight()
-                    .align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-
-            ) {
-                uiModel.temp?.let { temp ->
-                    Text(
-                        text = temp,
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(fontSize = 60.sp, fontFamily = amentFamily)
-                    )
-                }
-                Text(
-                    text = uiModel.condition!!,
-                    textAlign = TextAlign.Center,
-                    color = Color.White,
-                    style = TextStyle(fontSize = 50.sp, fontFamily = amentFamily)
-                )
-            }
-
-
-        }
-        Box(modifier = Modifier
-            .weight(0.2f)
-            .background(SUNNY)
-            .fillMaxSize()) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 12.dp), horizontalArrangement = Arrangement.SpaceAround
-            ) {
-
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxSize()
-
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentHeight()
-                            .align(Alignment.Center),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        uiModel.temp?.let { temp ->
-                            Text(
-                                text = temp.toString(),
-                                textAlign = TextAlign.Center,
-                                color = Color.White,
-                                modifier = Modifier.wrapContentHeight(align = Alignment.CenterVertically)
-                            )
-                        }
-                        Text(text = "min", textAlign = TextAlign.Center, color = Color.White)
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxSize()
-
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentHeight()
-                            .align(Alignment.Center),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        uiModel.temp?.let { temp ->
-                            Text(text = temp, textAlign = TextAlign.Center, color = Color.White)
-                        }
-                        Text(text = "Current", textAlign = TextAlign.Center, color = Color.White)
                     }
                 }
                 Box(

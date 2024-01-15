@@ -1,6 +1,5 @@
 package com.utick.dvtcodingassessment.ui.view
 
-import androidx.compose.ui.graphics.Color
 import com.utick.dvtcodingassessment.R
 import com.utick.dvtcodingassessment.data.response.currentWeather.Weather
 import com.utick.dvtcodingassessment.data.response.forecastresponse.Day

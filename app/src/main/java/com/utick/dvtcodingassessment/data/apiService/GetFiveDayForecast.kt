@@ -2,14 +2,12 @@ package com.utick.dvtcodingassessment.data.apiService
 
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.repository.WeatherRepository
-import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
 import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
 import com.utick.dvtcodingassessment.interactor.UseCase
 import com.utick.dvtcodingassessment.util.Either
 import com.utick.dvtcodingassessment.util.Failure
 import com.utick.dvtcodingassessment.util.NetworkHandler
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 
 class GetFiveDayForecast(

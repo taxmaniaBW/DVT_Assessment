@@ -1,7 +1,6 @@
 package com.utick.dvtcodingassessment.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,13 +12,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.utick.dvtcodingassessment.R
 import com.utick.dvtcodingassessment.ui.WeatherViewModel
-import com.utick.dvtcodingassessment.ui.data.Content
-import com.utick.dvtcodingassessment.util.asTemperatureString
-import com.utick.dvtcodingassessment.util.getDayOfWeek
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

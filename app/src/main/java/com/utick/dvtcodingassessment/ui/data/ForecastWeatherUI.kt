@@ -1,6 +1,5 @@
 package com.utick.dvtcodingassessment.ui.data
 
-import androidx.compose.ui.graphics.Color
 import com.utick.dvtcodingassessment.util.Failure
 
 data class ForecastWeatherUI(
