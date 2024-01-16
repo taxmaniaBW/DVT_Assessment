@@ -12,7 +12,8 @@ enum class WeatherCondition(val value: String) {
             "Clouds"  -> CLOUDY
             "Rain"  -> RAINY
             "Snow"  -> SNOW
-            else         -> throw IllegalArgumentException()
+            "Thunderstorm" -> RAINY
+            else         -> SUNNY
         }
     }
 }
