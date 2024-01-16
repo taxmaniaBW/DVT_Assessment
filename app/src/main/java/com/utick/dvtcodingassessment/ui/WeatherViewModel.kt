@@ -4,11 +4,8 @@ import com.utick.dvtcodingassessment.data.apiService.GetCurrentWeather
 import com.utick.dvtcodingassessment.data.apiService.GetFiveDayForecast
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
-import com.utick.dvtcodingassessment.data.response.forecastresponse.Day
 import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
-import com.utick.dvtcodingassessment.ui.BaseViewModel
 import com.utick.dvtcodingassessment.ui.data.Content
-import com.utick.dvtcodingassessment.ui.data.DayRowModel
 import com.utick.dvtcodingassessment.ui.data.CurrentWeatherUI
 import com.utick.dvtcodingassessment.ui.data.ForecastWeatherUI
 import com.utick.dvtcodingassessment.ui.view.HomeView
@@ -78,17 +75,20 @@ class WeatherViewModel(
     }
 
     /**
-     * Successful Response, build forecast weather ui Model
+     * Successful Response, api returns a long list not suitable for UI
+     * build forecast weather ui Model an provide activity with only whats needed
      */
 
     private fun handleFiveDayForecast(forecastWeatherResponse: ForecastWeatherResponse) {
         val contentList = arrayListOf<Content>()
-        for (day in forecastWeatherResponse.list) {
+        val byGroup = forecastWeatherResponse.list.groupBy { getDayOfWeek(it.dt) }
+        byGroup.entries.forEach {
+
             contentList.add(
                 Content(
-                temp = day.main.tempMax.asTemperatureString(),
-                day = getDayOfWeek(day.dt),
-                icon = homeView.getWeatherIcon(day),
+                    temp = it.value[0].main.tempMax.asTemperatureString(),
+                    day = it.key,
+                    icon = homeView.getWeatherIcon(it.value[0]),
             )
             )
         }
