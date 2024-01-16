@@ -18,7 +18,7 @@ Dependecies are defined in the *Deps.kt* file with their Versions on *Versions.k
 This allows for easy readability.
 
   
-  - [MATERIAL3] 
+  - [MATERIAL3]()
   - [JUNIT]() -> Standard testing library
   - [MOCKK]() -> For mocking objects
   - [KTOR_MOCK]()-> For mocking Ktor
@@ -31,10 +31,10 @@ This allows for easy readability.
   - [KOIN]() -> Dependecy Injection
   - [KOIN_COMPOSE]() -> Injecting into compose
 
-  ###TOOLS USED
+  ### TOOLS USED
 
-  -[JsonToKotlin]() -> Plugin to create data classes for the models
-  -[WhatFontIs](https://www.whatfontis.com/) -> Web tool to identify font from Image
+  - [JsonToKotlin]() -> Plugin to create data classes for the models
+  - [WhatFontIs](https://www.whatfontis.com/) -> Web tool to identify font from Image
 
 ## Usage
 
