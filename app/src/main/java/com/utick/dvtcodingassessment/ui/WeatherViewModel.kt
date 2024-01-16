@@ -50,6 +50,8 @@ class WeatherViewModel(
         _currentWeatherUi.value = CurrentWeatherUI(
             loading = false,
             temp = currentWeatherResponse.main?.temp?.asTemperatureString(),
+            tempMin = currentWeatherResponse.main?.tempMin?.asTemperatureString(),
+            tempMax = currentWeatherResponse.main?.tempMax?.asTemperatureString(),
             condition = currentWeatherResponse.weather[0].main,
             theme  = homeView.getTheme(currentWeatherResponse.weather[0]))
     }
