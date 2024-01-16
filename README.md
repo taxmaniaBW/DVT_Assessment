@@ -31,7 +31,18 @@ This allows for easy readability.
   - [KOIN]() -> Dependecy Injection
   - [KOIN_COMPOSE]() -> Injecting into compose
 
+  ###TOOLS USED
+
+  -[JsonToKotlin]() -> Plugin to create data classes for the models
+  -[WhatFontIs](https://www.whatfontis.com/) -> Web tool to identify font from Image
+
 ## Usage
+
+### Code
+
+1. Clone the project
+2. Add ApiKey to ./util/Constants
+3. Run Project
 
 #### BEFORE INSTALLING 
 
@@ -49,8 +60,8 @@ The apk can be downloaded [HERE](https://drive.google.com/file/d/15bxdftKDDLZFDn
   ![Permissions](https://github.com/taxmaniaBW/DVT_Assessment/blob/main/app_permissions.png)
   
   The app automatically loads when run with a shimmer effect while calling the api. On success the screen is updated,
-  changing the theme(background color and image) as per the returned weather condition, 
-  eg ![ThunderStorm Returned From API](https://drive.google.com/file/d/1ZuUHfM3SdIUpDoYhbMniNvZIKZVfMCki/view?usp=sharing)
+  changing the theme(background color and image) as per the returned weather condition. The weather forecast shows only the next 5 days.
+  eg ![ThunderStorm Returned From API](https://github.com/taxmaniaBW/DVT_Assessment/blob/main/api_success.png)
   
   
 
