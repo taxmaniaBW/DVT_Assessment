@@ -78,6 +78,7 @@ dependencies {
     implementation(Deps.KTOR_CONTENT_NEGOTIATION)
     implementation(Deps.KOTLINX)
     implementation(Deps.KOIN)
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     testImplementation(Deps.KOIN_JUNIT)
     implementation(Deps.KOIN_KTOR)
     implementation(Deps.KOIN_LOGGER)

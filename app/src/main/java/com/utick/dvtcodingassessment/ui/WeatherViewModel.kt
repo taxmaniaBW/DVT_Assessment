@@ -28,8 +28,8 @@ class WeatherViewModel(
 ): BaseViewModel() {
 
 
-    private val _dayData = MutableStateFlow<DayRowModel?>(null)
-    val dayData = _dayData.asStateFlow()
+    private val _currentLocation = MutableStateFlow<Coord?>(null)
+    val currentLocation = _currentLocation.asStateFlow()
 
     private val _currentWeatherUi = MutableStateFlow(CurrentWeatherUI(loading = false))
     val currentWeatherUi = _currentWeatherUi.asStateFlow()
@@ -107,11 +107,9 @@ class WeatherViewModel(
 
     }
 
-    fun getDayData(day: Day) {
-        val weatherIcon = homeView.getWeatherIcon(day)
-        val dayName = getDayOfWeek(day.dt)
-        val maxTemp = day.main.tempMax
-
-        _dayData.value = DayRowModel(dayName,weatherIcon,maxTemp)
+    fun setLocation(coord: Coord){
+        _currentLocation.value = coord
+        getCurrentWeather(coord)
+        getForecastWeather(coord)
     }
 }

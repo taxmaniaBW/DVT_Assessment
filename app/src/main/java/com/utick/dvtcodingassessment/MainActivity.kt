@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     when(permissionEvent) {
                         is Permission.Granted -> {
-                            HomeScreen()
+                            HomeScreen(context = this)
                         }
                         is Permission.ShowRationale -> {
                             Column(verticalArrangement = Arrangement.Center, modifier = Modifier.padding(all = 12.dp))
