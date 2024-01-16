@@ -46,6 +46,11 @@ class WeatherViewModel(
             }
 
     }
+
+    /**
+     * @param currentWeatherResponse: API Response
+     * Build UI Model to pass only relevant data to activity
+     */
     private fun handleCurrentWeather(currentWeatherResponse: CurrentWeatherResponse) {
         _currentWeatherUi.value = CurrentWeatherUI(
             loading = false,
@@ -69,7 +74,7 @@ class WeatherViewModel(
         _forecastWeatherUi.value = ForecastWeatherUI(loading = true)
         getFiveDayForecast(coord, dispatcher = ioDispatcher) {
             it.fold(
-                ::handleCurrentWeatherFailure,
+                ::handleForecastWeatherFailure,
                 ::handleFiveDayForecast
             )
         }
@@ -88,7 +93,7 @@ class WeatherViewModel(
 
             contentList.add(
                 Content(
-                    temp = it.value[0].main.tempMax.asTemperatureString(),
+                    temp = it.value[0].main.temp.asTemperatureString(),
                     day = it.key,
                     icon = homeView.getWeatherIcon(it.value[0]),
             )
@@ -100,7 +105,7 @@ class WeatherViewModel(
         )
     }
 
-    private fun handleCForecastWeatherFailure(failure: Failure){
+    private fun handleForecastWeatherFailure(failure: Failure){
         _forecastWeatherUi.value = ForecastWeatherUI(
             loading = false,
             error = failure,
@@ -108,6 +113,10 @@ class WeatherViewModel(
         )
 
     }
+
+    /**
+     * @param coord : Current location, sent from locationhelper
+     */
 
     fun setLocation(coord: Coord){
         _currentLocation.value = coord

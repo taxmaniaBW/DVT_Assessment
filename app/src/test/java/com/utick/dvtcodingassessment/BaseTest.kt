@@ -9,6 +9,8 @@ import com.utick.dvtcodingassessment.data.response.currentWeather.Rain
 import com.utick.dvtcodingassessment.data.response.currentWeather.Sys
 import com.utick.dvtcodingassessment.data.response.currentWeather.Weather
 import com.utick.dvtcodingassessment.data.response.currentWeather.Wind
+import com.utick.dvtcodingassessment.data.response.forecastresponse.Day
+import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
 import com.utick.dvtcodingassessment.util.NetworkHandler
 import io.mockk.MockKAnnotations
 import io.mockk.mockk
@@ -56,5 +58,18 @@ abstract class BaseTest {
         3163858,
         "Zocca",
         200
+    )
+
+
+    val dt1: Long = 1661871600
+    val dt2: Long = 1661882400
+
+    fun forecastResponse() = ForecastWeatherResponse(
+       list = listOf(
+           Day(dt= dt1, com.utick.dvtcodingassessment.data.response.forecastresponse.Main(temp = 234.5), weather = listOf(
+               com.utick.dvtcodingassessment.data.response.forecastresponse.Weather(main = "Clear")
+           ))
+       )
+
     )
 }

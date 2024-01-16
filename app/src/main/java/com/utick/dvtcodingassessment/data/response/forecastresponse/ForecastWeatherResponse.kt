@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ForecastWeatherResponse (
-    val cod: String,
-    val message: Long,
-    val cnt: Long,
+    val cod: String? = null,
+    val message: Long? = null,
+    val cnt: Long? = null,
     val list: List<Day>,
-    val city: City
+    val city: City? = null
 )

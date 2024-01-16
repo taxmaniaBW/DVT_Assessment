@@ -8,13 +8,13 @@ data class Day (
     val dt: Long,
     val main: Main,
     val weather: List<Weather>,
-    val clouds: Clouds,
-    val wind: Wind,
-    val visibility: Long,
-    val pop: Double,
+    val clouds: Clouds? = null,
+    val wind: Wind? = null,
+    val visibility: Long? = null,
+    val pop: Double? = null,
     val rain: Rain? = null,
-    val sys: Sys,
+    val sys: Sys? =null,
 
     @SerialName("dt_txt")
-    val dtTxt: String
+    val dtTxt: String? = null
 )
