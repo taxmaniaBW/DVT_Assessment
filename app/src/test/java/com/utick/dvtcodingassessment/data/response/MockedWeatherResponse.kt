@@ -56,7 +56,7 @@ object MockedWeatherResponse {
         }
         """
 
-    val forecast = """
+    val FORECAST = """
         
 {
   "cod": "200",
@@ -180,7 +180,6 @@ object MockedWeatherResponse {
       },
       "dt_txt": "2022-08-30 21:00:00"
     },
-    ....
     {
       "dt": 1662292800,
       "main": {
