@@ -37,7 +37,7 @@ class GetCurrentWeatherTest: BaseTest() {
         val useCase = GetCurrentWeather(networkHandler, weatherRepository, dispatcher)
         val expectedResponse = mockk<CurrentWeatherResponse>()
         coEvery { weatherRepository.getCurrentWeather(any()) } returns Either.Right(expectedResponse)
-        coEvery { networkHandler.isNetworkAvailable() } returns false
+        coEvery { networkHandler.isNetworkAvailable() } returns true
 
         val result = useCase.run(Coord(12.7,6.7) )
 
