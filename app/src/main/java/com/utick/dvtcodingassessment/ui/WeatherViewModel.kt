@@ -6,6 +6,7 @@ import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
 import com.utick.dvtcodingassessment.data.response.forecastresponse.Day
 import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
+import com.utick.dvtcodingassessment.ui.BaseViewModel
 import com.utick.dvtcodingassessment.ui.data.Content
 import com.utick.dvtcodingassessment.ui.data.DayRowModel
 import com.utick.dvtcodingassessment.ui.data.CurrentWeatherUI

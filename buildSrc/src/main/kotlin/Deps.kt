@@ -35,5 +35,6 @@ object Deps {
     const val KOIN_COMPOSE = "io.insert-koin:koin-androidx-compose:${Versions.KOIN}"
 
     //ADDITIONAL
-    const val ACCOMPANIST = "com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST}"
+    const val ACCOMPANIST_SYSTEM_UI = "com.google.accompanist:accompanist-systemuicontroller:${Versions.ACCOMPANIST}"
+    const val ACCOMPANIST_PERMISSIONS = "com.google.accompanist:accompanist-permissions:${Versions.ACCOMPANIST}"
 }
