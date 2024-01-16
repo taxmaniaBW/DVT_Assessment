@@ -59,7 +59,7 @@ The apk can be downloaded [HERE](https://drive.google.com/file/d/15bxdftKDDLZFDn
   Accept Location Permission Request, First run will require accepting location permissions, accept them to use the app.
   ![Permissions](https://github.com/taxmaniaBW/DVT_Assessment/blob/main/app_permissions.png)
   
-  The app automatically loads when run with a shimmer effect while calling the api. On success the screen is updated,
+  The app automatically loads when run, with a shimmer effect, while calling the api. On success the screen is updated,
   changing the theme(background color and image) as per the returned weather condition. The weather forecast shows only the next 5 days.
   eg ![ThunderStorm Returned From API](https://github.com/taxmaniaBW/DVT_Assessment/blob/main/api_success.png)
   
