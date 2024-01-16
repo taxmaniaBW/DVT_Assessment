@@ -4,10 +4,8 @@ import com.utick.dvtcodingassessment.data.apiService.GetCurrentWeather
 import com.utick.dvtcodingassessment.data.apiService.GetFiveDayForecast
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
-import com.utick.dvtcodingassessment.data.response.forecastresponse.Day
 import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
 import com.utick.dvtcodingassessment.ui.data.Content
-import com.utick.dvtcodingassessment.ui.data.DayRowModel
 import com.utick.dvtcodingassessment.ui.data.CurrentWeatherUI
 import com.utick.dvtcodingassessment.ui.data.ForecastWeatherUI
 import com.utick.dvtcodingassessment.ui.view.HomeView
@@ -27,8 +25,8 @@ class WeatherViewModel(
 ): BaseViewModel() {
 
 
-    private val _dayData = MutableStateFlow<DayRowModel?>(null)
-    val dayData = _dayData.asStateFlow()
+    private val _currentLocation = MutableStateFlow<Coord?>(null)
+    val currentLocation = _currentLocation.asStateFlow()
 
     private val _currentWeatherUi = MutableStateFlow(CurrentWeatherUI(loading = false))
     val currentWeatherUi = _currentWeatherUi.asStateFlow()
@@ -52,6 +50,8 @@ class WeatherViewModel(
         _currentWeatherUi.value = CurrentWeatherUI(
             loading = false,
             temp = currentWeatherResponse.main?.temp?.asTemperatureString(),
+            tempMin = currentWeatherResponse.main?.tempMin?.asTemperatureString(),
+            tempMax = currentWeatherResponse.main?.tempMax?.asTemperatureString(),
             condition = currentWeatherResponse.weather[0].main,
             theme  = homeView.getTheme(currentWeatherResponse.weather[0]))
     }
@@ -77,17 +77,20 @@ class WeatherViewModel(
     }
 
     /**
-     * Successful Response, build forecast weather ui Model
+     * Successful Response, api returns a long list not suitable for UI
+     * build forecast weather ui Model an provide activity with only whats needed
      */
 
     private fun handleFiveDayForecast(forecastWeatherResponse: ForecastWeatherResponse) {
         val contentList = arrayListOf<Content>()
-        for (day in forecastWeatherResponse.list) {
+        val byGroup = forecastWeatherResponse.list.groupBy { getDayOfWeek(it.dt) }
+        byGroup.entries.forEach {
+
             contentList.add(
                 Content(
-                temp = day.main.tempMax.asTemperatureString(),
-                day = getDayOfWeek(day.dt),
-                icon = homeView.getWeatherIcon(day),
+                    temp = it.value[0].main.tempMax.asTemperatureString(),
+                    day = it.key,
+                    icon = homeView.getWeatherIcon(it.value[0]),
             )
             )
         }
@@ -106,11 +109,9 @@ class WeatherViewModel(
 
     }
 
-    fun getDayData(day: Day) {
-        val weatherIcon = homeView.getWeatherIcon(day)
-        val dayName = getDayOfWeek(day.dt)
-        val maxTemp = day.main.tempMax
-
-        _dayData.value = DayRowModel(dayName,weatherIcon,maxTemp)
+    fun setLocation(coord: Coord){
+        _currentLocation.value = coord
+        getCurrentWeather(coord)
+        getForecastWeather(coord)
     }
 }

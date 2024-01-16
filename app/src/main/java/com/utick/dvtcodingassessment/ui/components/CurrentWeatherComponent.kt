@@ -65,7 +65,7 @@ fun CurrentWeatherLoading() {
     val uiModel = CurrentWeatherUI(
         loading = false,
         23.0.asTemperatureString(),
-        "Sunny",
+        condition = "Sunny",
         theme = CurrentWeatherTheme(R.drawable.sea_sunnypng, SUNNY)
     )
     Column {
@@ -291,10 +291,10 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                                 .align(Alignment.Center),
                             verticalArrangement = Arrangement.Center
                         ) {
-                            uiModel.temp?.let { temp ->
+                            uiModel.tempMin?.let { tempMin ->
                                 Text(
                                     fontFamily = amentFamily,
-                                    text = temp.toString(),
+                                    text = tempMin,
                                     textAlign = TextAlign.Center,
                                     color = Color.White,
                                     modifier = Modifier.wrapContentHeight(align = Alignment.CenterVertically)
@@ -341,14 +341,14 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
 
                             horizontalAlignment = Alignment.End
                         ) {
-                            uiModel.temp?.let { temp ->
+                            uiModel.tempMax?.let { tempMax ->
                                 Box(
                                     modifier = Modifier.wrapContentHeight()
 
                                 ) {
                                     Text(
                                         fontFamily = amentFamily,
-                                        text = temp.toString(),
+                                        text = tempMax,
                                         textAlign = TextAlign.Center,
                                         color = Color.White,
                                         modifier = Modifier.wrapContentHeight()

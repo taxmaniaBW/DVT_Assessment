@@ -24,7 +24,10 @@ fun ForecastWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewM
 
 
 
-    Column(modifier = Modifier.background(color = bgColor).fillMaxSize().verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier
+        .background(color = bgColor)
+        .fillMaxSize()
+        .verticalScroll(rememberScrollState())) {
         Spacer(modifier = Modifier.height(48.dp))
         forecastWeatherUI.content.forEach { content ->
             DayItem(day = content)
