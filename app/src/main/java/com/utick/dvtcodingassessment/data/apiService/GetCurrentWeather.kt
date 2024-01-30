@@ -1,5 +1,6 @@
 package com.utick.dvtcodingassessment.data.apiService
 
+import com.utick.dvtcodingassessment.data.local.CurrentWeatherData
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.repository.WeatherRepository
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
@@ -15,8 +16,8 @@ class GetCurrentWeather(
     private val weatherRepository: WeatherRepository,
     ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ):
-    UseCase<CurrentWeatherResponse, Coord>(ioDispatcher) {
-    override suspend fun run(params: Coord): Either<Failure, CurrentWeatherResponse> {
+    UseCase<CurrentWeatherData, Coord>(ioDispatcher) {
+    override suspend fun run(params: Coord): Either<Failure, CurrentWeatherData> {
         return when (networkHandler.isNetworkAvailable()){
             true -> weatherRepository.getCurrentWeather(params)
             false -> Either.Left(Failure.NetworkConnection)

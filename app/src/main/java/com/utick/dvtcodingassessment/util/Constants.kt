@@ -7,3 +7,4 @@ package com.utick.dvtcodingassessment.util
     const val UNITS = "units"
     const val METRIC = "metric"
     const val APPID = "appid"
+    const val DB_NAME = "weather_db"

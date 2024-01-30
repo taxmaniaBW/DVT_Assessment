@@ -29,8 +29,8 @@ class HomeView {
      * Get display theme based on current weather
      * @return CurrentWeatherTheme
      */
-    fun getTheme(currentCondition: Weather): CurrentWeatherTheme {
-        return when(currentCondition.main?.let { WeatherCondition.fromValue(it) }){
+    fun getTheme(currentCondition: String?): CurrentWeatherTheme {
+        return when(currentCondition?.let { WeatherCondition.fromValue(it) }){
             WeatherCondition.SUNNY -> CurrentWeatherTheme(R.drawable.sea_sunnypng, SUNNY)
             WeatherCondition.CLOUDY -> CurrentWeatherTheme(R.drawable.sea_cloudy, CLOUDY)
             WeatherCondition.RAINY -> CurrentWeatherTheme(R.drawable.sea_rainy, RAINY)

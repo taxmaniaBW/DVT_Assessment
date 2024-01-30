@@ -1,7 +1,11 @@
 package com.utick.dvtcodingassessment.data.repository
 
+import com.utick.dvtcodingassessment.data.DataSource
+import com.utick.dvtcodingassessment.data.local.CurrentWeatherData
+import com.utick.dvtcodingassessment.data.local.WeatherDao
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
+import com.utick.dvtcodingassessment.data.response.currentWeather.minimized
 import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
 import com.utick.dvtcodingassessment.network.ApiClient
 import com.utick.dvtcodingassessment.network.BASE_URL
@@ -22,8 +26,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 class WeatherRepositoryImpl(private val client : ApiClient,
-                            private val dispatcher : CoroutineDispatcher = Dispatchers.Default): WeatherRepository {
-    override suspend fun getCurrentWeather(coord: Coord): Either<Failure, CurrentWeatherResponse> {
+                            private val weatherDao: WeatherDao,
+                            private val dispatcher : CoroutineDispatcher = Dispatchers.Default,): WeatherRepository {
+    override suspend fun getCurrentWeather(coord: Coord, dataSource: DataSource): Either<Failure, CurrentWeatherData> {
 
            return try {
                 runBlocking(dispatcher) {
@@ -37,7 +42,9 @@ class WeatherRepositoryImpl(private val client : ApiClient,
 
                             }
                         }.body()
-                    Either.Right(currentWeatherResponse)
+                    val currentWeatherData = currentWeatherResponse.minimized()
+                    weatherDao.insert(currentWeatherData)
+                    Either.Right(currentWeatherData)
                 }
             } catch (e: Exception) {
                 Either.Left(Failure.ServerError)
@@ -48,7 +55,7 @@ class WeatherRepositoryImpl(private val client : ApiClient,
 
     }
 
-    override suspend fun getFiveDayForecast(coord: Coord): Either<Failure, ForecastWeatherResponse> {
+    override suspend fun getFiveDayForecast(coord: Coord, dataSource: DataSource): Either<Failure, ForecastWeatherResponse> {
         return try {
             val forecastWeatherResponse : ForecastWeatherResponse = client.api.get("$BASE_URL$FORECAST5") {
                 url {
@@ -63,6 +70,10 @@ class WeatherRepositoryImpl(private val client : ApiClient,
         } catch (e: Exception) {
             Either.Left(Failure.ServerError)
         }
+    }
+
+    override suspend fun getLocalCurrentWeather(): Either<Failure, CurrentWeatherData> {
+        TODO("Not yet implemented")
     }
 }
 

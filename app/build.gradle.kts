@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("plugin.serialization")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -19,6 +20,14 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+            }
         }
     }
 
@@ -78,7 +87,7 @@ dependencies {
     implementation(Deps.KTOR_CONTENT_NEGOTIATION)
     implementation(Deps.KOTLINX)
     implementation(Deps.KOIN)
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("com.google.android.gms:play-services-location:21.1.0")
     testImplementation(Deps.KOIN_JUNIT)
     implementation(Deps.KOIN_KTOR)
     implementation(Deps.KOIN_LOGGER)
@@ -86,6 +95,9 @@ dependencies {
     implementation(Deps.KOIN_COMPOSE)
     implementation(Deps.ACCOMPANIST_SYSTEM_UI)
     implementation(Deps.ACCOMPANIST_PERMISSIONS)
+    implementation(Deps.ROOM)
+    implementation(Deps.ROOM_KTX)
+    kapt(Deps.ROOM_COMPILER)
     testImplementation(Deps.JUNIT)
     testImplementation(Deps.MOCKK)
     testImplementation(Deps.KTOR_MOCK)

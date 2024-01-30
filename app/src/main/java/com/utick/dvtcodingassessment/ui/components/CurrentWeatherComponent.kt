@@ -35,6 +35,7 @@ import com.utick.dvtcodingassessment.ui.data.CurrentWeatherUI
 import com.utick.dvtcodingassessment.ui.theme.SUNNY
 import com.utick.dvtcodingassessment.ui.util.amentFamily
 import com.utick.dvtcodingassessment.util.asTemperatureString
+import com.utick.dvtcodingassessment.util.getAsDate
 import org.koin.androidx.compose.koinViewModel
 import shimmerLoadingAnimation
 
@@ -86,7 +87,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                 horizontalAlignment = Alignment.CenterHorizontally
 
             ) {
-                uiModel.temp?.let { temp ->
+                uiModel.data?.temp?.let { temp ->
                     Text(
                         text = temp,
                         color = Color.White,
@@ -94,13 +95,30 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                         style = TextStyle(fontSize = 60.sp, fontFamily = amentFamily)
                     )
                 }
-                uiModel.condition?.let {
+                uiModel.data?.condition?.let {
                     Text(
-                        text = uiModel.condition,
+                        text = it,
                         textAlign = TextAlign.Center,
                         color = Color.White,
                         style = TextStyle(fontSize = 50.sp, fontFamily = amentFamily)
                     )
+                }
+
+                uiModel.data?.updatedDate?.let {
+                    Row {
+                        Text(
+                            text = "Last Updated: ",
+                            textAlign = TextAlign.Center,
+                            color = Color.White,
+                            style = TextStyle(fontSize = 14.sp, fontFamily = amentFamily)
+                        )
+                        Text(
+                            text = it.getAsDate(),
+                            textAlign = TextAlign.Center,
+                            color = Color.White,
+                            style = TextStyle(fontSize = 14.sp, fontFamily = amentFamily)
+                        )
+                    }
                 }
             }
 
@@ -136,7 +154,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                                 .align(Alignment.Center),
                             verticalArrangement = Arrangement.Center
                         ) {
-                            uiModel.tempMin?.let { tempMin ->
+                            uiModel.data?.tempMin?.let { tempMin ->
                                 Text(
                                     fontFamily = amentFamily,
                                     text = tempMin,
@@ -161,7 +179,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                                 .align(Alignment.Center),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            uiModel.temp?.let { temp ->
+                            uiModel.data?.temp?.let { temp ->
                                 Text(fontFamily = amentFamily, text = temp, textAlign = TextAlign.Center, color = Color.White)
                             }
                             Text(
@@ -186,7 +204,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
 
                             horizontalAlignment = Alignment.End
                         ) {
-                            uiModel.tempMax?.let { tempMax ->
+                            uiModel.data?.tempMax?.let { tempMax ->
                                 Box(
                                     modifier = Modifier.wrapContentHeight()
 

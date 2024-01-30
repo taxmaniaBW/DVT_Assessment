@@ -2,6 +2,7 @@ package com.utick.dvtcodingassessment.ui
 
 import com.utick.dvtcodingassessment.data.apiService.GetCurrentWeather
 import com.utick.dvtcodingassessment.data.apiService.GetFiveDayForecast
+import com.utick.dvtcodingassessment.data.local.CurrentWeatherData
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
 import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
@@ -51,14 +52,11 @@ class WeatherViewModel(
      * @param currentWeatherResponse: API Response
      * Build UI Model to pass only relevant data to activity
      */
-    private fun handleCurrentWeather(currentWeatherResponse: CurrentWeatherResponse) {
+    private fun handleCurrentWeather(currentWeatherData: CurrentWeatherData) {
         _currentWeatherUi.value = CurrentWeatherUI(
             loading = false,
-            temp = currentWeatherResponse.main?.temp?.asTemperatureString(),
-            tempMin = currentWeatherResponse.main?.tempMin?.asTemperatureString(),
-            tempMax = currentWeatherResponse.main?.tempMax?.asTemperatureString(),
-            condition = currentWeatherResponse.weather[0].main,
-            theme  = homeView.getTheme(currentWeatherResponse.weather[0]))
+            data = currentWeatherData,
+            theme  = homeView.getTheme(currentWeatherData.condition))
     }
 
     private fun handleCurrentWeatherFailure(failure: Failure){

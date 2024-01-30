@@ -13,6 +13,7 @@ object Versions {
         const val ANDROID_X_TESTING = "2.2.0"
         const val KOTLINX_CO_TEST = "1.7.1"
         const val ACCOMPANIST = "0.33.2-alpha"
+        const val ROOM = "2.6.1"
 
 
 }
