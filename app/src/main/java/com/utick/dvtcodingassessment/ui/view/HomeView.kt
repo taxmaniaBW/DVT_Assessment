@@ -15,8 +15,8 @@ class HomeView {
      * @param day : Day model, could be current or from the forecast
      * @return icon resource Id based on weather condition
      */
-    fun getWeatherIcon(day: Day): Int{
-        return when(WeatherCondition.fromValue(day.weather[0].main)){
+    fun getWeatherIcon(condition: String): Int{
+        return when(WeatherCondition.fromValue(condition)){
             WeatherCondition.SUNNY -> R.drawable.clear
             WeatherCondition.CLOUDY -> R.drawable.partlysunny
             WeatherCondition.RAINY -> R.drawable.rain

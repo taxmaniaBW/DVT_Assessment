@@ -3,6 +3,7 @@ package com.utick.dvtcodingassessment.ui
 import com.utick.dvtcodingassessment.data.apiService.GetCurrentWeather
 import com.utick.dvtcodingassessment.data.apiService.GetFiveDayForecast
 import com.utick.dvtcodingassessment.data.local.CurrentWeatherData
+import com.utick.dvtcodingassessment.data.local.ForecastWeatherData
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
 import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
@@ -84,18 +85,14 @@ class WeatherViewModel(
      * build forecast weather ui Model an provide activity with only whats needed
      */
 
-    private fun handleFiveDayForecast(forecastWeatherResponse: ForecastWeatherResponse) {
+    private fun handleFiveDayForecast(forecastWeatherData: List<ForecastWeatherData>) {
         val contentList = arrayListOf<Content>()
-        val byGroup = forecastWeatherResponse.list.groupBy { getDayOfWeek(it.dt) }
-        byGroup.entries.forEach {
-
+        forecastWeatherData.forEach {
             contentList.add(
                 Content(
-                    temp = it.value[0].main.temp.asTemperatureString(),
-                    day = it.key,
-                    icon = homeView.getWeatherIcon(it.value[0]),
-            )
-            )
+                    temp = it.temp,
+                    day = it.day,
+                    icon = homeView.getWeatherIcon(it.condition.toString())))
         }
         _forecastWeatherUi.value = ForecastWeatherUI(
             loading = false,

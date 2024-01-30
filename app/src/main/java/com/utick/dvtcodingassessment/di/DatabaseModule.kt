@@ -13,8 +13,9 @@ val databaseModule = module {
         Room.databaseBuilder(
             androidApplication(),
             WeatherDB::class.java,
-            DB_NAME
-        ).build()
+            DB_NAME,
+        ).fallbackToDestructiveMigration()
+            .build()
     }
 
     single {
