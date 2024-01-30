@@ -9,7 +9,7 @@ import com.utick.dvtcodingassessment.ui.theme.CLOUDY
 import com.utick.dvtcodingassessment.ui.theme.RAINY
 import com.utick.dvtcodingassessment.ui.theme.SUNNY
 
-class HomeView {
+class HomeView: BaseView() {
 
     /**
      * @param day : Day model, could be current or from the forecast

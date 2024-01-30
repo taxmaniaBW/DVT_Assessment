@@ -1,6 +1,7 @@
 package com.utick.dvtcodingassessment.ui.components
 
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -34,15 +36,21 @@ import com.utick.dvtcodingassessment.ui.data.CurrentWeatherTheme
 import com.utick.dvtcodingassessment.ui.data.CurrentWeatherUI
 import com.utick.dvtcodingassessment.ui.theme.SUNNY
 import com.utick.dvtcodingassessment.ui.util.amentFamily
+import com.utick.dvtcodingassessment.ui.view.HomeView
 import com.utick.dvtcodingassessment.util.asTemperatureString
 import com.utick.dvtcodingassessment.util.getAsDate
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
+import org.koin.java.KoinJavaComponent.get
 import shimmerLoadingAnimation
 
 @Composable
-fun CurrentWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewModel = koinViewModel()) {
+fun CurrentWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewModel = koinViewModel(),
+        homeView: HomeView = koinInject()) {
 
     val uiModel by weatherViewModel.currentWeatherUi.collectAsState()
+
 
 
         if(uiModel.loading){
@@ -50,7 +58,23 @@ fun CurrentWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewMo
         }
         else {
             if(uiModel.hasError) {
-                Log.e("CurrentWeatherComponent", "CurrentWeatherComponent: ${uiModel.error}")
+                val activity = (LocalContext.current as? Activity)
+               DisplayAlert(
+                   onDismissRequest = {
+                       activity?.finish()
+                   },
+                   onConfirmation = {
+                       weatherViewModel.currentLocation.value?.let {
+                           weatherViewModel.getCurrentWeather(
+                               it
+                           )
+                       }
+                   },
+                   dialogTitle = LocalContext.current.getString(R.string.error),
+                   dialogText = homeView.getFailureMessage(uiModel.error, LocalContext.current),
+                   confirmButtonText = LocalContext.current.getString(R.string.try_again),
+                   dismissButtonText =LocalContext.current.getString(R.string.cancel)
+               )
             }
             else {
                 CurrentWeatherScreen(uiModel)
