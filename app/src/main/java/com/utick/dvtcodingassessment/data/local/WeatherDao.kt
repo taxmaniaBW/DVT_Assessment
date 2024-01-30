@@ -12,6 +12,6 @@ interface WeatherDao {
     suspend fun insert(currentWeatherEntity: CurrentWeatherData)
 
     @Query("SELECT * FROM current_weather")
-    fun getCurrentWeather(): CurrentWeatherData
+    fun getCurrentWeather(): CurrentWeatherData?
 
 }

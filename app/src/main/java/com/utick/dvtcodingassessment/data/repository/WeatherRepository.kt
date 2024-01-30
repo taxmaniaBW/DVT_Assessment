@@ -8,8 +8,8 @@ import com.utick.dvtcodingassessment.util.Either
 import com.utick.dvtcodingassessment.util.Failure
 
 interface WeatherRepository  {
-    suspend fun getCurrentWeather(coord: Coord, dataSource: DataSource = DataSource.REMOTE): Either<Failure, CurrentWeatherData>
-    suspend fun getFiveDayForecast(coord: Coord, dataSource: DataSource = DataSource.REMOTE): Either<Failure, ForecastWeatherResponse>
+    suspend fun getCurrentWeather(coord: Coord): Either<Failure, CurrentWeatherData>
+    suspend fun getFiveDayForecast(coord: Coord): Either<Failure, ForecastWeatherResponse>
 
-    suspend fun getLocalCurrentWeather(): Either<Failure, CurrentWeatherData>
+    suspend fun getLocalCurrentWeather(reason: Failure = Failure.None): Either<Failure, CurrentWeatherData>
 }

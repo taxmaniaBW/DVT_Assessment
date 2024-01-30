@@ -28,7 +28,7 @@ import kotlinx.coroutines.runBlocking
 class WeatherRepositoryImpl(private val client : ApiClient,
                             private val weatherDao: WeatherDao,
                             private val dispatcher : CoroutineDispatcher = Dispatchers.Default,): WeatherRepository {
-    override suspend fun getCurrentWeather(coord: Coord, dataSource: DataSource): Either<Failure, CurrentWeatherData> {
+    override suspend fun getCurrentWeather(coord: Coord): Either<Failure, CurrentWeatherData> {
 
            return try {
                 runBlocking(dispatcher) {
@@ -47,7 +47,7 @@ class WeatherRepositoryImpl(private val client : ApiClient,
                     Either.Right(currentWeatherData)
                 }
             } catch (e: Exception) {
-                Either.Left(Failure.ServerError)
+                getLocalCurrentWeather(Failure.ServerError) //Fallback to local
             }
 
 
@@ -55,7 +55,7 @@ class WeatherRepositoryImpl(private val client : ApiClient,
 
     }
 
-    override suspend fun getFiveDayForecast(coord: Coord, dataSource: DataSource): Either<Failure, ForecastWeatherResponse> {
+    override suspend fun getFiveDayForecast(coord: Coord): Either<Failure, ForecastWeatherResponse> {
         return try {
             val forecastWeatherResponse : ForecastWeatherResponse = client.api.get("$BASE_URL$FORECAST5") {
                 url {
@@ -72,8 +72,16 @@ class WeatherRepositoryImpl(private val client : ApiClient,
         }
     }
 
-    override suspend fun getLocalCurrentWeather(): Either<Failure, CurrentWeatherData> {
-        TODO("Not yet implemented")
+    override suspend fun getLocalCurrentWeather(reason: Failure): Either<Failure, CurrentWeatherData> {
+        val currentWeatherData = weatherDao.getCurrentWeather()
+        currentWeatherData?.let {
+            return Either.Right(it)
+        }
+        if(reason != Failure.None) {
+            return Either.Left(reason) // We return failure response from API Call
+        }
+        return Either.Left(Failure.NetworkConnection) //Default failure is network connection to allow user to try remote call
+
     }
 }
 

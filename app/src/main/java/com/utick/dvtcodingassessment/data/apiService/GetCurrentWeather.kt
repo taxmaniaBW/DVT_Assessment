@@ -20,7 +20,7 @@ class GetCurrentWeather(
     override suspend fun run(params: Coord): Either<Failure, CurrentWeatherData> {
         return when (networkHandler.isNetworkAvailable()){
             true -> weatherRepository.getCurrentWeather(params)
-            false -> Either.Left(Failure.NetworkConnection)
+            false -> weatherRepository.getLocalCurrentWeather()
         }
 
     }
