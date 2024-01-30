@@ -68,6 +68,9 @@ fun CurrentWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewMo
                            weatherViewModel.getCurrentWeather(
                                it
                            )
+                           weatherViewModel.getForecastWeather(
+                               it
+                           )
                        }
                    },
                    dialogTitle = LocalContext.current.getString(R.string.error),
