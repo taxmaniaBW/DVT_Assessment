@@ -1,7 +1,10 @@
 package com.utick.dvtcodingassessment.data.response.currentWeather
 
 
+import com.utick.dvtcodingassessment.data.local.CurrentWeatherData
+import com.utick.dvtcodingassessment.util.asTemperatureString
 import kotlinx.serialization.Serializable
+import java.util.Date
 
 
 @Serializable
@@ -23,3 +26,13 @@ data class CurrentWeatherResponse (
   val cod : Int? = null
 
 )
+
+fun CurrentWeatherResponse.minimized(): CurrentWeatherData {
+  return CurrentWeatherData(
+    temp = main?.temp?.asTemperatureString(),
+    tempMin = main?.tempMin?.asTemperatureString(),
+    tempMax = main?.tempMax?.asTemperatureString(),
+    condition = weather[0].main,
+    updatedDate = System.currentTimeMillis()
+  )
+}

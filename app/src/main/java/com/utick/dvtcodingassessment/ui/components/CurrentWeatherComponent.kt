@@ -1,6 +1,7 @@
 package com.utick.dvtcodingassessment.ui.components
 
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -22,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -34,14 +36,21 @@ import com.utick.dvtcodingassessment.ui.data.CurrentWeatherTheme
 import com.utick.dvtcodingassessment.ui.data.CurrentWeatherUI
 import com.utick.dvtcodingassessment.ui.theme.SUNNY
 import com.utick.dvtcodingassessment.ui.util.amentFamily
+import com.utick.dvtcodingassessment.ui.view.HomeView
 import com.utick.dvtcodingassessment.util.asTemperatureString
+import com.utick.dvtcodingassessment.util.getAsDate
+import org.koin.androidx.compose.get
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
+import org.koin.java.KoinJavaComponent.get
 import shimmerLoadingAnimation
 
 @Composable
-fun CurrentWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewModel = koinViewModel()) {
+fun CurrentWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewModel = koinViewModel(),
+        homeView: HomeView = koinInject()) {
 
     val uiModel by weatherViewModel.currentWeatherUi.collectAsState()
+
 
 
         if(uiModel.loading){
@@ -49,7 +58,23 @@ fun CurrentWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewMo
         }
         else {
             if(uiModel.hasError) {
-                Log.e("CurrentWeatherComponent", "CurrentWeatherComponent: ${uiModel.error}")
+                val activity = (LocalContext.current as? Activity)
+               DisplayAlert(
+                   onDismissRequest = {
+                       activity?.finish()
+                   },
+                   onConfirmation = {
+                       weatherViewModel.currentLocation.value?.let {
+                           weatherViewModel.getCurrentWeather(
+                               it
+                           )
+                       }
+                   },
+                   dialogTitle = LocalContext.current.getString(R.string.error),
+                   dialogText = homeView.getFailureMessage(uiModel.error, LocalContext.current),
+                   confirmButtonText = LocalContext.current.getString(R.string.try_again),
+                   dismissButtonText =LocalContext.current.getString(R.string.cancel)
+               )
             }
             else {
                 CurrentWeatherScreen(uiModel)
@@ -59,161 +84,6 @@ fun CurrentWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewMo
     }
 
 }
-
-@Composable
-fun CurrentWeatherLoading() {
-    val uiModel = CurrentWeatherUI(
-        loading = false,
-        23.0.asTemperatureString(),
-        condition = "Sunny",
-        theme = CurrentWeatherTheme(R.drawable.sea_sunnypng, SUNNY)
-    )
-    Column {
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxSize()
-
-
-        ) {
-            uiModel.theme?.let { theme ->
-                Image(
-                    modifier = Modifier
-                        .matchParentSize()
-                        .shimmerLoadingAnimation(),
-                    painter = painterResource(id = theme.bgImage),
-                    contentDescription = "",
-                    contentScale = ContentScale.FillBounds
-
-                )
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentHeight()
-                    .align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
-
-            ) {
-                uiModel.temp?.let { temp ->
-                    Text(
-                        modifier = Modifier.shimmerLoadingAnimation(),
-                        text = temp,
-                        color = Color.White,
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(fontSize = 60.sp, fontFamily = amentFamily)
-                    )
-                }
-                Text(
-                    modifier = Modifier.shimmerLoadingAnimation(),
-                    text = uiModel.condition!!,
-                    textAlign = TextAlign.Center,
-                    color = Color.White,
-                    style = TextStyle(fontSize = 50.sp, fontFamily = amentFamily)
-                )
-            }
-
-
-        }
-        Box(modifier = Modifier
-            .weight(0.2f)
-            .background(SUNNY)
-            .fillMaxSize()) {
-            Row(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 12.dp), horizontalArrangement = Arrangement.SpaceAround
-            ) {
-
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxSize()
-
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentHeight()
-                            .align(Alignment.Center),
-                        verticalArrangement = Arrangement.Center
-                    ) {
-                        uiModel.temp?.let { temp ->
-                            Text(
-                                text = temp.toString(),
-                                textAlign = TextAlign.Center,
-                                color = Color.White,
-                                modifier = Modifier
-                                    .wrapContentHeight(align = Alignment.CenterVertically)
-                                    .shimmerLoadingAnimation()
-                            )
-                        }
-                        Text(modifier = Modifier.shimmerLoadingAnimation(), text = "min", textAlign = TextAlign.Center, color = Color.White)
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxSize()
-
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentHeight()
-                            .align(Alignment.Center),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        uiModel.temp?.let { temp ->
-                            Text(modifier = Modifier.shimmerLoadingAnimation(),text = temp, textAlign = TextAlign.Center, color = Color.White)
-                        }
-                        Text(modifier = Modifier.shimmerLoadingAnimation(),text = "Current", textAlign = TextAlign.Center, color = Color.White)
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxSize()
-
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentHeight()
-                            .align(Alignment.Center),
-
-                        horizontalAlignment = Alignment.End
-                    ) {
-                        uiModel.temp?.let { temp ->
-                            Box(
-                                modifier = Modifier.wrapContentHeight()
-
-                            ) {
-                                Text(
-                                    text = temp.toString(),
-                                    textAlign = TextAlign.Center,
-                                    color = Color.White,
-                                    modifier = Modifier.wrapContentHeight()
-
-                                )
-                            }
-                        }
-                        Text(text = "max", textAlign = TextAlign.Center, color = Color.White)
-                    }
-                }
-            }
-        }
-
-        Divider(
-            color = Color.White,
-            modifier = Modifier
-                .height(1.dp)
-                .fillMaxWidth()
-        )
-    }
-}
-
 @Composable
 fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
     Column {
@@ -241,7 +111,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                 horizontalAlignment = Alignment.CenterHorizontally
 
             ) {
-                uiModel.temp?.let { temp ->
+                uiModel.data?.temp?.let { temp ->
                     Text(
                         text = temp,
                         color = Color.White,
@@ -249,13 +119,30 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                         style = TextStyle(fontSize = 60.sp, fontFamily = amentFamily)
                     )
                 }
-                uiModel.condition?.let {
+                uiModel.data?.condition?.let {
                     Text(
-                        text = uiModel.condition,
+                        text = it,
                         textAlign = TextAlign.Center,
                         color = Color.White,
                         style = TextStyle(fontSize = 50.sp, fontFamily = amentFamily)
                     )
+                }
+
+                uiModel.data?.updatedDate?.let {
+                    Row {
+                        Text(
+                            text = "Last Updated: ",
+                            textAlign = TextAlign.Center,
+                            color = Color.White,
+                            style = TextStyle(fontSize = 14.sp, fontFamily = amentFamily)
+                        )
+                        Text(
+                            text = it.getAsDate(),
+                            textAlign = TextAlign.Center,
+                            color = Color.White,
+                            style = TextStyle(fontSize = 14.sp, fontFamily = amentFamily)
+                        )
+                    }
                 }
             }
 
@@ -291,7 +178,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                                 .align(Alignment.Center),
                             verticalArrangement = Arrangement.Center
                         ) {
-                            uiModel.tempMin?.let { tempMin ->
+                            uiModel.data?.tempMin?.let { tempMin ->
                                 Text(
                                     fontFamily = amentFamily,
                                     text = tempMin,
@@ -316,7 +203,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
                                 .align(Alignment.Center),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            uiModel.temp?.let { temp ->
+                            uiModel.data?.temp?.let { temp ->
                                 Text(fontFamily = amentFamily, text = temp, textAlign = TextAlign.Center, color = Color.White)
                             }
                             Text(
@@ -341,7 +228,7 @@ fun CurrentWeatherScreen(uiModel: CurrentWeatherUI){
 
                             horizontalAlignment = Alignment.End
                         ) {
-                            uiModel.tempMax?.let { tempMax ->
+                            uiModel.data?.tempMax?.let { tempMax ->
                                 Box(
                                     modifier = Modifier.wrapContentHeight()
 

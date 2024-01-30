@@ -1,8 +1,14 @@
 package com.utick.dvtcodingassessment.data.repository
 
+import com.utick.dvtcodingassessment.data.DataSource
+import com.utick.dvtcodingassessment.data.local.CurrentWeatherData
+import com.utick.dvtcodingassessment.data.local.ForecastWeatherData
+import com.utick.dvtcodingassessment.data.local.WeatherDao
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.response.currentWeather.CurrentWeatherResponse
+import com.utick.dvtcodingassessment.data.response.currentWeather.minimized
 import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
+import com.utick.dvtcodingassessment.data.response.forecastresponse.minimized
 import com.utick.dvtcodingassessment.network.ApiClient
 import com.utick.dvtcodingassessment.network.BASE_URL
 import com.utick.dvtcodingassessment.network.CURRENT
@@ -22,8 +28,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 class WeatherRepositoryImpl(private val client : ApiClient,
-                            private val dispatcher : CoroutineDispatcher = Dispatchers.Default): WeatherRepository {
-    override suspend fun getCurrentWeather(coord: Coord): Either<Failure, CurrentWeatherResponse> {
+                            private val weatherDao: WeatherDao,
+                            private val dispatcher : CoroutineDispatcher = Dispatchers.Default,): WeatherRepository {
+    override suspend fun getCurrentWeather(coord: Coord): Either<Failure, CurrentWeatherData> {
 
            return try {
                 runBlocking(dispatcher) {
@@ -37,10 +44,12 @@ class WeatherRepositoryImpl(private val client : ApiClient,
 
                             }
                         }.body()
-                    Either.Right(currentWeatherResponse)
+                    val currentWeatherData = currentWeatherResponse.minimized()
+                    weatherDao.saveCurrentWeather(currentWeatherData)
+                    Either.Right(currentWeatherData)
                 }
             } catch (e: Exception) {
-                Either.Left(Failure.ServerError)
+                getLocalCurrentWeather(Failure.ServerError) //Fallback to local
             }
 
 
@@ -48,7 +57,7 @@ class WeatherRepositoryImpl(private val client : ApiClient,
 
     }
 
-    override suspend fun getFiveDayForecast(coord: Coord): Either<Failure, ForecastWeatherResponse> {
+    override suspend fun getFiveDayForecast(coord: Coord): Either<Failure, List<ForecastWeatherData>> {
         return try {
             val forecastWeatherResponse : ForecastWeatherResponse = client.api.get("$BASE_URL$FORECAST5") {
                 url {
@@ -59,10 +68,35 @@ class WeatherRepositoryImpl(private val client : ApiClient,
 
                 }
             }.body()
-            Either.Right(forecastWeatherResponse)
+            val forecastWeatherData = forecastWeatherResponse.minimized()
+            weatherDao.saveForecastWeather(forecastWeatherData)
+            Either.Right(forecastWeatherData)
         } catch (e: Exception) {
-            Either.Left(Failure.ServerError)
+            getLocalForecastWeather(Failure.ServerError)
         }
+    }
+
+    override suspend fun getLocalCurrentWeather(reason: Failure): Either<Failure, CurrentWeatherData> {
+        val currentWeatherData = weatherDao.getCurrentWeather()
+        currentWeatherData?.let {
+            return Either.Right(it)
+        }
+        if(reason != Failure.None) {
+            return Either.Left(reason) // We return failure response from API Call
+        }
+        return Either.Left(Failure.NetworkConnection) //Default failure is network connection to allow user to try remote call
+
+    }
+
+    override suspend fun getLocalForecastWeather(reason: Failure): Either<Failure, List<ForecastWeatherData>> {
+        val forecastWeatherData = weatherDao.getForecastWeather()
+        forecastWeatherData?.let {
+            return Either.Right(it)
+        }
+        if(reason != Failure.None) {
+            return Either.Left(reason) // We return failure response from API Call
+        }
+        return Either.Left(Failure.NetworkConnection) //Default failure is network connection to allow user to try remote call
     }
 }
 

@@ -22,15 +22,22 @@ fun ForecastWeatherComponent(modifier: Modifier, weatherViewModel : WeatherViewM
     val forecastWeatherUI by weatherViewModel.forecastWeatherUi.collectAsState()
     val bgColor = currentWeatherUI.theme?.color ?: Color.DarkGray
 
+    if(forecastWeatherUI.loading) {
+        ForecastWeatherLoading()
+    }
+    else {
 
 
-    Column(modifier = Modifier
-        .background(color = bgColor)
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())) {
-        Spacer(modifier = Modifier.height(48.dp))
-        forecastWeatherUI.content.forEach { content ->
-            DayItem(day = content)
+        Column(
+            modifier = Modifier
+                .background(color = bgColor)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            Spacer(modifier = Modifier.height(48.dp))
+            forecastWeatherUI.content.forEach { content ->
+                DayItem(day = content)
+            }
         }
     }
 

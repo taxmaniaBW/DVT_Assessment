@@ -9,14 +9,14 @@ import com.utick.dvtcodingassessment.ui.theme.CLOUDY
 import com.utick.dvtcodingassessment.ui.theme.RAINY
 import com.utick.dvtcodingassessment.ui.theme.SUNNY
 
-class HomeView {
+class HomeView: BaseView() {
 
     /**
      * @param day : Day model, could be current or from the forecast
      * @return icon resource Id based on weather condition
      */
-    fun getWeatherIcon(day: Day): Int{
-        return when(WeatherCondition.fromValue(day.weather[0].main)){
+    fun getWeatherIcon(condition: String): Int{
+        return when(WeatherCondition.fromValue(condition)){
             WeatherCondition.SUNNY -> R.drawable.clear
             WeatherCondition.CLOUDY -> R.drawable.partlysunny
             WeatherCondition.RAINY -> R.drawable.rain
@@ -29,8 +29,8 @@ class HomeView {
      * Get display theme based on current weather
      * @return CurrentWeatherTheme
      */
-    fun getTheme(currentCondition: Weather): CurrentWeatherTheme {
-        return when(currentCondition.main?.let { WeatherCondition.fromValue(it) }){
+    fun getTheme(currentCondition: String?): CurrentWeatherTheme {
+        return when(currentCondition?.let { WeatherCondition.fromValue(it) }){
             WeatherCondition.SUNNY -> CurrentWeatherTheme(R.drawable.sea_sunnypng, SUNNY)
             WeatherCondition.CLOUDY -> CurrentWeatherTheme(R.drawable.sea_cloudy, CLOUDY)
             WeatherCondition.RAINY -> CurrentWeatherTheme(R.drawable.sea_rainy, RAINY)

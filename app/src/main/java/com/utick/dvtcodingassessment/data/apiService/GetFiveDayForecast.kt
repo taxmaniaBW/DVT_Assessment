@@ -1,5 +1,6 @@
 package com.utick.dvtcodingassessment.data.apiService
 
+import com.utick.dvtcodingassessment.data.local.ForecastWeatherData
 import com.utick.dvtcodingassessment.data.model.Coord
 import com.utick.dvtcodingassessment.data.repository.WeatherRepository
 import com.utick.dvtcodingassessment.data.response.forecastresponse.ForecastWeatherResponse
@@ -15,11 +16,11 @@ class GetFiveDayForecast(
     private val weatherRepository: WeatherRepository,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
     ):
-    UseCase<ForecastWeatherResponse, Coord>(ioDispatcher) {
-    override suspend fun run(params: Coord): Either<Failure, ForecastWeatherResponse> {
+    UseCase<List<ForecastWeatherData>, Coord>(ioDispatcher) {
+    override suspend fun run(params: Coord): Either<Failure, List<ForecastWeatherData>> {
         return when (networkHandler.isNetworkAvailable()){
             true -> weatherRepository.getFiveDayForecast(params)
-            false -> Either.Left(Failure.NetworkConnection)
+            false -> weatherRepository.getLocalForecastWeather()
         }
 
     }

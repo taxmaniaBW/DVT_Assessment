@@ -16,6 +16,7 @@ import org.koin.dsl.module
 val appModule = module {
     includes(repositoryModule)
     includes(viewModelsModule)
+    includes(databaseModule)
     single(named("IODispatcher")) {
         Dispatchers.IO
     }
